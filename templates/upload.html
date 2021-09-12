@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-3">Загрузите файл формата .txt </h4>
+<h4 class="mb-3">Текст в загруженном файле считается корпусом.</h4>
+<h4 class="">Пустая строка разделяет тексты в корпусе </h4>
+<form class="mt-5" method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">Загрузить</button>
+</form>
+<div class="m-5">
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>Term frequency</th>
+                <th>Inverse document frequency</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for term, tf, idf in page_obj %}
+                <tr {% if term == 'TEXT' %} style="color:#f15a22"{% endif %}>
+                    <td>{{ term }}</td>
+                    <td>{{ tf }}</td>
+                    <td>{{ idf }}</td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; начало</a>
+                <a href="?page={{ page_obj.previous_page_number }}">пред.</a>
+            {% endif %}
+    
+            <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">след.</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">конец &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+{% endblock %}
