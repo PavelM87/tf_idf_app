@@ -1,0 +1,1 @@
+web: gunicorn TF_IDF.wsgi
