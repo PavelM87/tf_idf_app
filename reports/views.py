@@ -88,6 +88,5 @@ def term_table(request):
     paginator = Paginator(tfidf, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    filename = '_'.join(document.file.name.split('_')[:-1]) + '.txt' # Оригинальное название файла
-    print(filename)
+    filename = document.file.name
     return render(request, 'term_table.html', {'page_obj': page_obj, 'filename': filename})
