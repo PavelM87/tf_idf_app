@@ -13,13 +13,18 @@ def get_data(filename):
     """ Cчитывание данных из файла"""
     corpus = {}
     cnt = 0
+    prev = '' # Переменная для хранения значение предыдущей строки файла
     with open('media/' + filename, 'r') as f:
         for line in f:
             if line.strip(): # Если строка не пустая
                 line = line.lower().translate(str.maketrans('', '', string.punctuation)) # Убираю знаки препинания и делаю слова строчными
                 corpus.setdefault(cnt, []).extend(line.split())
+                prev = line
+            elif line.strip() == '' and prev == '': # На случай если будет больше одной пустой строки между текстами в файле
+                pass
             else:
                 cnt += 1
+                prev = ''
     return corpus
 
 
@@ -83,4 +88,6 @@ def term_table(request):
     paginator = Paginator(tfidf, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'term_table.html', {'page_obj': page_obj})
+    filename = '_'.join(document.file.name.split('_')[:-1]) + '.txt' # Оригинальное название файла
+    print(filename)
+    return render(request, 'term_table.html', {'page_obj': page_obj, 'filename': filename})
